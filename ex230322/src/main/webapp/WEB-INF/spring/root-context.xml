@@ -27,6 +27,11 @@
 	</bean>
 	
 	<!-- mapper scan -->
+	<!-- 인터페이스 기준으로 읽어드림
+	     xml Mapper namaspace가 우선순위가 아닌 점을 발견
+	     별도의 설정이 필요함
+	     두 파일의 이름은 정확하게 일치하게 설정하고 사용해야한다
+	     정리 : 마이바티스 맵퍼를 스캔할 때 별도 설정이 없다면 인터페이스와 xml 대소문자 구분없이 이름이 같아야 함 -->
 	<mybatis-spring:scan base-package="com.yedam.app.**.mapper" />
 
 </beans>
