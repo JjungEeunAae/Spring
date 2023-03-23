@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<context:property-placeholder location="classpath:config/db.properties" />
+
+<!-- datasource connection pool -->
+<!-- 아이디는 내가 설정할 수 있지만, 외부 라이브러리는 아이디는 정해져있기 때문에 건들면 안된다 -->
+<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+  <property name="driverClassName" value="${driver}" />
+  <property name="jdbcUrl"    value="${url}" />
+  <property name="username"   value="${user}" />
+  <property name="password"   value="${password}" />
+</bean>
+
+<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" 
+      destroy-method="close">
+  <!-- 생성자 주입 -->
+  <constructor-arg ref="hikariConfig" />
+</bean>
+
+<!-- mybatis SqlSessionFactory -->
+<!-- DB로 요청 보내고 결과 받고 자원을 끊는 과정을 처리하는 것 -->
+<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+  <property name="dataSource" ref="dataSource"/>
+  <property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+  <!-- 매퍼에 대한 위치를 알려줄 때 , 별도로 지정했기 때문에 인터페이스와 이름이 같지않아도 된다 -->
+  <property name="mapperLocations" value="classpath*:com/yedam/sprig/**/mapper/*Mapper.xml"/>
+</bean>
+
+<!-- mapper scan -->
+<!-- 맵퍼 인터페이스가 어디인지 설정해주면 된다 -->
+<mybatis-spring:scan base-package="com.yedam.spring.**.mapper" />
+
+</beans>

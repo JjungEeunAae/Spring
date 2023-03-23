@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- xml에 연동될 인터페이스 패키지 경로와 해당 인터페이스의 이름을 넣어준다 -->
+ <mapper namespace="com.yedam.spring.emp.mapper.EmpMapper">
+ 	<!-- 전체조회 -->
+ 	<!-- mybatis-config.xml에서 typeAliases를 통해 VO 클래스에 대한 별칭을 설정해두었기 때문에
+ 		해당되는 클래스 이름만 적어주면 된다 -->
+ 	<select id="selectEmpAllList" resultType="EmpVO">
+ 		SELECT employee_id,
+ 			   first_name,
+ 			   last_name,
+ 			   email,
+ 			   phone_number,
+ 			   hire_date,
+ 			   job_id,
+ 			   salary,
+ 			   commission_pct,
+ 			   manager_id,
+ 			   department_id
+ 		FROM employees
+ 		ORDER BY employee_id
+ 	</select>
+ 	
+ 	<!-- 단건조회 -->
+ 	<!-- 파라미터타입은 생략해도 되며, 생략하는걸 권장한다, 넘어오는 데이터에 맞춰 알아서 읽어드린다-->
+ 	<!-- ${} : 타입을 따로 지정하지 않는다
+ 			   예시) 0 -> 0, 가나다 -> 가나다,
+ 	     #{} : PreparedStatement 들어오는 데이터에 맞춰서 타입을 지정해준다
+ 	     	   테이블 또는 컬럼의 값을 받아올 때 사용한다
+ 	     	   메서드와, "?" 이것을 이용해서 데이터를 전달
+ 	     	   예시) 0 -> 0, 가나다 -> '가나다' -->
+ 	<select id="selectEmpInfo" resultType="EmpVO">
+ 		SELECT employee_id,
+ 			   first_name,
+ 			   last_name,
+ 			   email,
+ 			   phone_number,
+ 			   hire_date,
+ 			   job_id,
+ 			   salary,
+ 			   commission_pct,
+ 			   manager_id,
+ 			   department_id
+ 		FROM employees
+ 		WHERE employee_id = #{ employeeId }
+ 	</select>
+ 	
+ 	<!-- 등록 -->
+ 	<!-- 등록 파라미터 타입과 결과 타입을 필수적으로 요구 -->
+ 	<insert id="insertEmpInfo" parameterType="EmpVO">
+ 	 	<!-- selectKey 실행되기 전과 후에 연속적으로 실행되는 SQL문
+		     insert, update 할 때 사용
+		     프라이머리키를 부여할 때 사용
+		     장점 : 등록할 때 시퀀스를 기반으로 등록하면 그 직후에 해당 인설트된 아이디 값을 알 수 없다 하지만 selectKey는 가능
+		     1. 실행한 기반으로 insert가 들어가기 때문에 가능하다
+		        결과가 어디에 담기냐면 VO에 담긴다
+		     **시퀀스 단점 : 기본적으로 숫자밖에 안됨
+		       모든 테이블의 아이디가 숫자로만 구성되어 있으면 아이디 값으로만 조회했을 때 프라이머리의 키인지 알 수 없다
+		       문자를 결합한 아이디를 많이 지원한다
+		       
+		       NVL(MAX(employee_id),0) + 1
+		       최초즤 값이 null이며, NVL을 통하여 null값을 0으로 처리,
+		       그 다음 값부터는 1씩 증가
+		       
+		                                                   order = 언제실행할것인지 -->
+ 		<selectKey keyProperty="employeeId" resultType="int" order="BEFORE">
+ 			SELECT NVL(MAX(employee_id),0) + 1
+ 			FROM employees
+ 		</selectKey>
+ 		
+ 		INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)
+ 					   VALUES (#{employeeId}, #{firstName}, #{lastName}, #{email}, sysdate, #{jobId}, #{salary})
+ 	</insert>
+ 	
+ 	<!-- 수정 : 급여를 정해진 비율로 인상 -->
+ 	<!-- 파라미터를 두 개를 매개변수로 넘길 땐 파라미터타입을 생략한다
+ 	     두 개가 넘어올 땐 둘 중에 어떤걸 어디에 쓸건지 위치를 정확하게 지정해야하기 때문에 이름이 필요함
+ 	     메서드 쪽에 작업을 해야한다 : EmpMapper.java -> @Param 어노테이션 -->
+ 	<update id="updateEmpSal">
+ 		UPDATE employees
+ 		SET salary = salary * ( 1 + #{raise} / 100)
+ 		WHERE employee_id = #{employeeId}
+ 	</update>
+ 	
+ 	
+ 	<!-- 수정 : 사원 정보 수정 (해당되는 사원의 정보 중 특정한 정보만 수정하고 싶을 때)-->
+ 	<!-- 1) 모든 항목에 업데이트 진행, 전체조건 : 모든 항목에 정보가 존재
+ 	     2) Mybatis를 쓰는 경우에는 Dynamic SQL 사용해서 해당 정보에 대해서 들어오면 그 항목만 업데이트하도록 진행
+ 	     	if, choose( when, otherwise ), trim( where, set ), foreach -->
+ 	<update id="updateEmpInfo" parameterType="EmpVO">
+ 		UPDATE employees
+ 		<set>
+ 			<if test="firstName != null and !firstName.equals('')">
+ 				first_name = #{firstName},
+ 			</if>
+			<if test="email != null and !email.equals('')">
+				email = #{email},
+			</if>
+			<if test="salary > 0">
+				salary = #{salary},
+			</if>
+ 		</set>
+ 		WHERE employee_id = #{employeeId}
+ 	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteEmpInfo" parameterType="int">
+		DELETE FROM employees
+		WHERE employee_id = #{employeeId}
+	</delete>
+ 	
+ </mapper>
