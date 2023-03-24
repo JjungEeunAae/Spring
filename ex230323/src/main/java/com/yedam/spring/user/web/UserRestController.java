@@ -21,7 +21,9 @@ import com.yedam.spring.user.service.UserVO;
 //간단한 에러를 처리해주는 어노테이션
 @CrossOrigin
 //데이터를 반환하는 컨트롤러
-@RestController
+@RestController // = @Controller + @ResponseBody
+				//   해당 클래스 내의 모든 컨트롤러는 객체를 반환한다, 데이터를 반환한다
+				//   페이지를 리턴 못한다, 그렇기 때문에 @@RequestMapping과 리턴하는 객체를 활용한 것
 public class UserRestController {
 	//경로
 	@RequestMapping(value = "/insertUser",
