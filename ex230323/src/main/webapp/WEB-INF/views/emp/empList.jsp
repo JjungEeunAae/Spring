@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
 <title>전체조회</title>
 <style>
     table, tr, th, td{
@@ -42,32 +45,13 @@
     </table>
 
     <script>
-        /*  권장방식 XXXX
-            제일 많이 쓰는 속성 중 onclik
-            서로 다른 언어일 땐 컴파일하는 순서가 다르다
-            그렇기때문에 의도한대로 결과가 나오지않을 경우도 있다
-
-            서로 다른 코드는 겹쳐서 쓰지않는 것을 권장한다
-        */
-
-
-
-
-        /*  jsp는 자바가 먼저 해석된다
-            그 다음 html 해석하는 브라우저에서 css, html, script를 읽는다
-        */
-
-        //EmpController.java에서 만든 rrtt.addFlashAttribute("result", result);가 출력됨
-
-        //printAlert(${result}); --> 잘못된 방법
-        //실제로 값이 들어갈 경우 인식할 수 있는 형태가 아니기 때문에 인식할 수 있도록 따움표를 붙혀줘야한다
-        //printAlert(`${result}`); --> 올바른 방법
-        //따움표는 줄바꿈을 인식하지 않기 때문에 백틱(``)을 사용한다
-
         function printAlert(message){
-            alert(message);
+        	Swal.fire({
+        				icon: 'success',
+        				title: '확인해주세요',
+        				text: message,
+        	});
         };
-
         printAlert(`${result}`);
     </script>
 </body>
