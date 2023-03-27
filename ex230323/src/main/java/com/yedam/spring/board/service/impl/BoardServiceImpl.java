@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteBoardInfo(int boardNo) {
 		int result = boardMapper.deleteBoard(boardNo);
 		if (result == 1) {
-			return 1;
+			return boardNo;
 		} else {
 			return -1;
 		}
