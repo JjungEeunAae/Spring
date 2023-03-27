@@ -31,7 +31,7 @@
  		 그러므로 별칭은 반드시 있어야한다 -->
  	<select id="getBoardNo" resultType="BoardVO">
  		SELECT NVL(MAX(bno), 0) + 1 as bno
- 		FROM board
+ 		FROM boder
  	</select>
  	
  	<!-- 등록 : 필수와 선택 구분 -->
@@ -49,15 +49,15 @@
  						   </if>
  						  )
 			 	VALUES    (
-			 				${bno}
-			 			   ,${title}
-			 			   ,${contents}
-			 			   ,${writer}
+			 				#{bno}
+			 			   ,#{title}
+			 			   ,#{contents}
+			 			   ,#{writer}
 			 			   <if test="regdate != null">
-			 			   	,#{regdate}
+			 			   ,#{regdate}
 			 			   </if>
-			 			   <if test="image != null and and !image.equals('')">
-			 			   ,${image}
+			 			   <if test="image != null and !image.equals('')">
+			 			   ,#{image}
 			 			   </if>
 			 			  )
  	</insert>
