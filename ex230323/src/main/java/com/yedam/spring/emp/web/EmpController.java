@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -94,7 +95,15 @@ public class EmpController {
 	}
 	
 	
-	
+	@PostMapping("/empDelete")
+	@ResponseBody
+	//들어오는 양을 체크하여 방식을 두가지로 나눈다
+	//보내오는 데이터가 두가지라면 커멘드 객체를 사용
+	//어차피 보내오는 데이터는 하나고 필요하는 하나라면 리퀘스트파람을 사용하는 것을 추천
+	public String empDeleteProcess(@RequestParam int employeeId){
+		Map<String, String> map = empService.deleteEmp(employeeId);
+		return map.get("결과");
+	}
 	
 	
 	

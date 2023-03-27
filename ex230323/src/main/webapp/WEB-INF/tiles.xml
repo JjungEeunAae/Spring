@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 순서가 중요함 -->
+	<!-- template : 1순위, 무조건 있어야하는 속성,
+					레이아웃을 짤 떄 기본 구조를 짜는 것 -->
+	<definition name="mainTemplate" template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+	</definition>
+	
+	<definition name="home" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	
+	<!-- extends : 기존의 내 위에 있는 모든 definition -->
+	<definition name="*/*" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	
+</tiles-definitions>
