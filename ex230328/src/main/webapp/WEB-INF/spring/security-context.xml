@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<security:http pattern="/css/**" security="none"/>
+
+<!-- 적용하고자하는 유알엘 로그인 정보까지 넣어줘야 함
+	 어떤 경로에서 적용할건지말건지를 결정하는 것이 intercept-url이다.
+	 그 밑엔 인증과 관련된 것들
+  	 유알엘에 우리 서버와 관련된 경로에 대해서 어떤식으로 적용할것인지 적어주면 됨
+	
+	 체크가 유알엘이 순차적으로 들어기 때문에 아스타가 밑에 있어야 함(개중요함)
+	
+	 jsp를 요청하게되면 엑세스(권한)에 대한 체크
+	 permitAll() : 시큐리티에서 제공하는 메소드
+				   모든사람에 대해서 허용하겠다라는 의미(인증,인가 무시) -->
+<!-- hasAuthority() : 지정해둔 경로에 대해서 특정한 권한만 접근할 수 있다라는 의미, ROLE_ 을 붙힌다 -->
+<!-- isAuthenticated() 어드민도 가능하고 유저도 가능하다, 권한에 상관없이 인증한 사람들이라면 다 접근할 수 있도록 처리한다 -->
+<!--form-login : 내가 만들어낸 페이지를 연결하기도 하고 여러가지 작업을 한다, 구글링 참고
+	폼로그인이 시도하고 성공하면 자동으로 찾아갈 유알엘만 잡아둔것
+	default-target-url : 로그인이 시도하고나서 성공을하면 어디로가겠습니다라고 결정하는 것-->
+<!-- logout-url :  로그아웃을 요청했을 때 어디로 보낼껀지 정의를 해둔 것
+logout-success-url : 로그아웃이 성공됐을 때 가는 장소 -->  
+
+<security:http>
+	<security:intercept-url pattern="/top.jsp" access="permitAll()"/>
+	<security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**" access="isAuthenticated()"/>
+	
+	<security:form-login default-target-url="/top.jsp"/>
+	<security:logout logout-url="/logout" logout-success-url="/top.jsp"/>
+	<security:csrf disabled="true"/>
+</security:http>
+
+<security:authentication-manager>
+	<security:authentication-provider>
+		<security:user-service>
+			<security:user name="user" password="1234" authorities="ROLE_USER"/>
+			<security:user name="admin" password="1234" authorities="ROLE_ADMIN"/>
+		</security:user-service>
+	</security:authentication-provider>
+</security:authentication-manager>
+
+
+</beans>
