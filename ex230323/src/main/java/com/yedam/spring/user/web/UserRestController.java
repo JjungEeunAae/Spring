@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yedam.spring.user.service.UserListVO;
 import com.yedam.spring.user.service.UserVO;
@@ -126,14 +128,20 @@ public class UserRestController {
 		return userVO;
 	}
 	
-	@PostMapping("/upload")
+	//VO에 있는 필드명의 타입을 배열로 선언(MultipartFile[])
+	/*PostMapping("/upload")
 	public String uploadFile(UserVO userVO) {
 		System.out.println("name : " + userVO.getName());
-		System.out.println("file : " + userVO.getPic().getOriginalFilename());
+		//System.out.println("file : " + userVO.getPic().getOriginalFilename());
 		return "업로드가 완료되었습니다";
+	}*/
+	
+	//독립적인 컨트롤러를 만들어놓고 이미지 파일을 업로드한다
+	@PostMapping("/upload")
+	public String uploadFile(@RequestPart MultipartFile[] pic) {
+		System.out.println(pic[0].getOriginalFilename());
+		return "Upload Complete!";
 	}
-	
-	
 	
 	
 	

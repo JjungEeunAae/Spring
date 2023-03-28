@@ -18,7 +18,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
-	<h1>사원등록</h1>
+	<h1>사원조회</h1>
     <form onsubmit="return false" >
         <div>
             <label>

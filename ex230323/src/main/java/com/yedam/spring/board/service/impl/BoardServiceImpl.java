@@ -9,6 +9,7 @@ import com.yedam.spring.board.mapper.BoardMapper;
 import com.yedam.spring.board.service.BoardService;
 import com.yedam.spring.board.service.BoardVO;
 
+// 구현클래스 : 빈을 등록되는 대상
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
