@@ -43,5 +43,17 @@
 	  <filter-name>encodingFilter</filter-name>
 	  <url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- 필터순서 : encodingFilter > springSecurityFilterChain 
+	     인코딩 필터링은 시큐리티보다 빨리 동작해야 함 
+		 인코딩되고 아직 해석하지않은데이터를 내가 받아버리면 내가 정상적인 데이터임에도 불구하고 시큐리티가 작동못함-->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
