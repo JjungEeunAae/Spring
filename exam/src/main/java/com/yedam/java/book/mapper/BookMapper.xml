@@ -45,7 +45,8 @@
 		select r.book_no, b.book_name, sum(book_price) book_price, count(r.book_no) count
 		from book_tbl_06 b join rent_tbl_06 r
 		on b.book_no = r.book_no
-		group by r.book_no, b.book_name, book_price
+		group by r.book_no, b.book_name
+		order by r.book_no
 	</select>
 	
 </mapper>

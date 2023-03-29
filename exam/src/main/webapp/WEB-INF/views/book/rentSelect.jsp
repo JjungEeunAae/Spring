@@ -24,7 +24,7 @@
 				<tr>
 					<td>${bookList.bookNo}</td>
 					<td>${bookList.bookName}</td>
-					<td>${bookList.sumPrice}</td>
+					<td>${bookList.bookPrice}</td>
 					<td>${bookList.count}</td>
 				</tr>
 			</c:forEach>

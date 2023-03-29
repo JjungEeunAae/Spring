@@ -22,6 +22,9 @@
             <label>출판일자 : <input type="date" name="bookDate"></label>
         </div>
         <div>
+            <label>금액 : <input type="number" name="bookPrice"></label>
+        </div>
+        <div>
             <label>출판사 : <input type="text" name="bookPublsher"></label>
         </div>
         <div>
