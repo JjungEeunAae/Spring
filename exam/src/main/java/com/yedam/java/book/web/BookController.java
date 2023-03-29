@@ -37,4 +37,9 @@ public class BookController {
 		model.addAttribute("bookRentList", service.bookRentList());
 		return "book/rentSelect";
 	}
+	
+	@GetMapping("index")
+	public String indexPage() {
+		return "book/index";
+	}
 }

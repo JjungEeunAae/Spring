@@ -22,31 +22,47 @@
 	
 	<insert id="bookInsert" parameterType="BookVO">
 		INSERT INTO book_tbl_06(
-                        book_no,
-                        book_name,
-                        book_coverimg,
-                        book_date,
-                        book_price,
-                        book_publsher,
-                        book_info
+                        book_no
+                        ,book_name
+                        <if test="bookCoverimg != null and !bookCoverimg.equals('')">
+                        ,book_coverimg
+                        </if>
+                        <if test="bookDate != null and !bookDate.equals('')">
+                        ,book_date
+                        </if>
+                        ,book_price
+                        <if test="bookPublsher != null and !bookPublsher.equals('')">
+                        ,book_publsher
+                        </if>
+                        <if test="bookInfo != null and !bookInfo.equals('')">
+                        ,book_info
+                        </if>
                         )
                 VALUES(
-                        #{bookNo},
-                        #{bookName},
-                        #{bookCoverimg},
-                        sysdate,
-                        #{bookPrice},
-                        #{bookPublsher},
-                        #{bookInfo}
+                        #{bookNo}
+                        ,#{bookName}
+                        <if test="bookCoverimg != null and !bookCoverimg.equals('')">
+                        ,#{bookCoverimg}
+                        </if>
+                        <if test="bookDate != null and !bookDate.equals('')">
+                        ,sysdate
+                        </if>
+                        ,#{bookPrice}
+                        <if test="bookPublsher != null and !bookPublsher.equals('')">
+                        ,#{bookPublsher}
+                        </if>
+                        <if test="bookInfo != null and !bookInfo.equals('')">
+                        ,#{bookInfo}
+                        </if>
                         )
 	</insert>
 	
 	<select id="bookRentList" resultType="BookVO">
-		select r.book_no, b.book_name, sum(book_price) book_price, count(r.book_no) count
-		from book_tbl_06 b join rent_tbl_06 r
-		on b.book_no = r.book_no
-		group by r.book_no, b.book_name
-		order by r.book_no
+		SELECT r.book_no, b.book_name, sum(book_price) book_price, count(r.book_no) count
+		FROM book_tbl_06 b join rent_tbl_06 r
+		ON b.book_no = r.book_no
+		GROUP BY r.book_no, b.book_name
+		ORDER BY r.book_no
 	</select>
 	
 </mapper>

@@ -22,7 +22,7 @@
 				</div> 대여현황조회
 			</a>
 			<a class="nav-link"
-				href="${pageContext.request.contextPath}/bookAllList">
+				href="${pageContext.request.contextPath}/index">
 				<div class="sb-nav-link-icon">
 					<i class="fas fa-tachometer-alt"></i>
 				</div> 홈으로
