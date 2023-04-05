@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>단건조회</title>
+</head>
+<body>
+	<div>
+		<div>
+			<label id="empId">사원번호 : 
+				<input type="text" id="empId" th:value="${empInfo.employeeId}" readonly>
+			</label>
+		</div>
+			<label id="name">이름 : 
+				<input type="text" id="name" th:value="${empInfo.firstName}">
+			</label>
+		<div>
+			<label id="email">이메일 : 
+				<input type="text" id="email" th:value="${empInfo.email}" readonly>
+			</label>
+		</div>
+		<div>
+			<label id="hire">입사일 : 
+				<input type="text" id="hire" th:value="${#dates.format(empInfo.hireDate, 'yyyy-MM-dd')}" readonly>
+			</label>
+		</div>
+		<div>
+			<label id="job">업무 : 
+				<input type="text" id="job" th:value="${empInfo.jobId}" readonly>
+			</label>
+		</div>
+		<div>
+			<button type="button" th:onclick="|location.href='@{/empList}'|">목록</button>
+		</div>
+	</div>
+</body>
+</html>
