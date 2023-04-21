@@ -33,7 +33,6 @@ public class EmpController {
 	//모델에 담아서 페이지에 전달해줘야하기 때문에
 	public String getEmpAllList(Model model) {
 		model.addAttribute("empList", empService.getEmpAll());
-		
 		//views 밑에 찾아갈 경로를 적어주면 됨
 		return "emp/empList";
 	}
