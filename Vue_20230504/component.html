@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="my-app">
+    <login-component></login-component>
+    <signinComponent></signinComponent>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+  <script>
+
+    const options = {
+      moduleCache: {
+        vue: Vue
+      },
+      async getFile(url) {
+        
+        const res = await fetch(url);
+        if ( !res.ok )
+          throw Object.assign(new Error(res.statusText + ' ' + url), { res });
+        return {
+          getContentData: asBinary => asBinary ? res.arrayBuffer() : res.text(),
+        }
+      },
+      addStyle(textContent) {
+
+        const style = Object.assign(document.createElement('style'), { textContent });
+        const ref = document.head.getElementsByTagName('style')[0] || null;
+        document.head.insertBefore(style, ref);
+      },
+    }
+
+    const { loadModule } = window['vue3-sfc-loader'];
+
+    const app = Vue.createApp({
+      components: {
+        //카멜케이스로도 사용이 가능하다.
+        'login-component': Vue.defineAsyncComponent( () => loadModule('./login.vue', options) ),
+        'signinComponent': Vue.defineAsyncComponent( () => loadModule('./signin.vue', options) )
+      }
+    });
+
+    app.mount('#my-app');
+
+  </script>
+</body>
+</html>
