@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <title>Pettopia</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="content">
+<style>
+.backColor{
+	margin-top: 30px;
+	background: rgb(250, 250, 250);
+	padding: 10px 0px 10px 0px !important;
+	border-radius: 15px;
+	padding: 10px;
+}
+
+th, td {
+text-align: center;
+}
+
+#btnCss{
+/*float: right;*/
+position: relative;
+bottom: 10px;
+margin-top: 25px;
+}
+
+.filter{
+margin-top: 25px;
+}
+
+.filter li {
+display: inline-block;
+padding-top: 10px;
+border: 1px solid rgb(235, 235, 235);
+border-radius: 10px;
+background-color: white;
+padding: 8px 22px 5px 22px;
+} 
+
+tbody img{
+width: 100px;
+}
+
+td, tr, th{
+	vertical-align: middle !important;
+}
+
+#clickLi, .status-link a{
+	cursor: pointer;
+}
+
+img{
+	width: 30px;
+}
+
+</style>
+
+    <div class="container">
+			<div class="row">
+				<!-- 마이페이지 주문관리 -->
+				<div class="col-md-8 col-lg-10 p-b-80 fontSize">
+					<div class="p-r-45 p-r-0-lg m-t-50">
+						<h1>
+							<span style="font-weight: bold; color: rgb(201, 159, 240);">| </span>주문관리
+						</h1>
+						
+						<div class="row m-t-20 m-b-20 backColor">
+							<!--결제여부-->
+							<div class="status-icons">
+								<img src="img/spinner-fill-icon.png" alt="">
+								<img src="img/credit-card-detailed-line-icon.png" alt="">
+								<img src="img/circle-error.png" alt="">
+							</div>
+							<div class="status-text">
+								<div>
+									<span id="">결제완료</span>
+								</div>
+							</div>
+							<div class="status-link" style="margin-bottom: 20px;">
+								<a class="fontColor" id="prcCnt-1">0</a>
+								<a class="fontColor" id="prcCnt-2">0</a>
+								<a class="fontColor" id="prcCnt-3">0</a>
+							</div>
+							
+							<!-- 배송 상태 -->
+							<div class="status-icons">
+								<!--<img src="images/icons/check-bill.png" alt="">-->
+								<img src="img/giftbox.png" alt="">
+								<img src="img/cargo-truck.png"  style="width: 40px !important; height: 40px;" alt="">
+								<img src="img/circle-check.png" alt="">
+							</div>
+
+							<div class="status-text">
+								<div th:each="slist : ${code.SS}">
+									<span class="test" th:text="${slist.codTitle}"></span>
+								</div>
+							</div>
+
+							<div class="status-link">
+								<a class="fontColor" id="a-1">0</a>
+								<a class="fontColor" id="b-1">0</a>
+								<a class="fontColor" id="c-1">0</a>
+							</div>
+						</div>
+
+						<!-- 검색 기능 -->
+						<div class="row m-t-20 m-b-20 backColor">
+							<div class="col-md-3">
+								<div style="margin-left: 30px;">
+									<span> 주문처리</span>
+									<select name="shipSt" class="allOrderSearch" id="shipSt">
+										<option value="">전체 주문처리 상태</option>
+										<!--배송상태-->
+										<option name="shipSt"></option>
+									</select>
+									<br/>
+									<span> 결제여부</span>
+									<select name="prcSt" class="allOrderSearch" id="prcSt">
+										<option value="">전체 결제여부</option>
+										<!--결제상태-->
+										<option name="prcSt"></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="filter" id="clickLi" name="">
+									<ul>
+										<a class="fontColor"><li id="1">오늘</li></a>
+										<a class="fontColor"><li id="7">1주일</li></a>
+										<a class="fontColor"><li id="30">1개월</li></a>
+										<a class="fontColor"><li id="90">3개월</li></a>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="filter" name="">
+									<input type="date" id="start" name="start" class="datePut">
+									<span style="margin: 0px 10px;"> - </span>
+									<input type="date" id="end" name="end" class="datePut">
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div id="btnCss">
+									<button type="button" class="btn btnPush btnLightBlue" name="searchBtn" id="searchBtn">
+										검색
+									</button>
+								</div>
+							</div>
+						</div>
+						
+						<!-- 상품주문정보 -->
+						<div>
+							<h4 style="margin-bottom: 20px;">상품주문정보</h4>
+							<!--구매한 주문정보-->
+							<div>
+								<table class="table" id="orderList">
+									<colgroup>
+											<col width="13%">
+											<col width="20%">
+											<col width="19%">
+											<col width="10%">
+											<col width="10%">
+											<col width="9%">
+											<col width="10%">
+											<col width="8%">
+									</colgroup>
+									<thead style="text-align: center;" id="draw">
+										<tr>
+											<th scope="col">
+												주문일자 <br/>
+												주문번호
+											</th>
+											<th scope="col">이미지</th>
+											<th scope="col">상품정보</th>
+											<th scope="col">수량</th>
+											<th scope="col">상품금액</th>
+											<th scope="col">총금액</th>
+											<th scope="col">주문처리상태</th>
+											<th scope="col">결제여부</th>
+										</tr>
+									</thead>
+									<tbody id="getOrderList" name="getOrderList"></tbody>
+								</table>
+							</div>
+
+							<!--paging div-->
+							<!--참고 : https://po9357.github.io/spring/2019-05-28-Board_Paging/-->
+							<!--참고2 : https://yju7257.tistory.com/97-->
+							<div class="d-flex justify-content-center m-t-20">
+								<div class="pagination">
+									<!--이전-->
+									<th:block th:if="${paging.startPage != 1 }">
+										<a th:href= "'/mypage?nowPage='+${paging.startPage-1}+'&cntPerPage='+${paging.cntPerPage}">&laquo;</a>
+									</th:block>
+									<!--시작페이지 - 끝페이지-->
+									<th:block th:each=" i : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+										<a th:href="'/mypage?nowPage='+${i}+'&cntPerPage='+${paging.cntPerPage}"
+											th:text="${i}"></a>
+									</th:block>
+									<!--다음-->
+									<th:block th:if="${paging.endPage != paging.lastPage}">
+										<a th:href="'/mypage?nowPage='+${paging.startPage + 1}+'&cntPerPage='+${paging.cntPerPage}">&raquo;</a>
+									</th:block>
+								</div>
+							</div>  <!--end paging div-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+		</script>
+	</div>
+</body>
+</html>
+</html>

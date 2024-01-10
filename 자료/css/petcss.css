@@ -1,0 +1,168 @@
+/* 버튼 css */
+.btnBlueGreen.btnPush {
+box-shadow: 0px 5px 0px 0px #007144;
+}
+
+.btnLightBlue.btnPush {
+box-shadow: 0px 5px 0px 0px #1E8185;
+}
+
+.btnOrange.btnPush {
+box-shadow: 0px 5px 0px 0px #A66615;
+}
+
+.btnRed.btnPush {
+box-shadow: 0px 5px 0px 0px #6d1818;
+}
+
+.btnPush:hover {
+margin-top: 15px;
+margin-bottom: 5px;
+}
+
+.btnBlueGreen.btnPush:hover {
+box-shadow: 0px 0px 0px 0px #007144;
+}
+
+.btnLightBlue.btnPush:hover {
+box-shadow: 0px 0px 0px 0px #1E8185;
+}
+
+.btnOrange.btnPush:hover {
+box-shadow: 0px 0px 0px 0px #A66615;
+}
+
+.btnRed.btnPush:hover {
+box-shadow: 0px 0px 0px 0px #6d1818;
+}
+.btn {
+display: block;
+position: relative;
+float: left;
+width: 50px;
+padding: 0;
+margin: 10px 10px 10px 0;
+font-weight: 600;
+text-align: center;
+line-height: 30px;
+color: #FFF;
+border-radius: 5px;
+transition: all 0.2s ;
+}
+
+.btnBlueGreen {
+background: #00AE68;
+}
+
+.btnLightBlue {
+background: #5DC8CD;
+}
+
+.btnOrange {
+background: #FFAA40;
+}
+
+.btnRed {
+background: #a52222;
+}
+
+/*----------------------------------------------------------*/
+
+/* input style*/
+input {
+width: 500px;
+height: 32px;
+font-size: 15px;
+border: 0;
+border-radius: 15px;
+outline: none;
+padding-left: 10px;
+background-color: rgb(233, 233, 233);
+}
+
+.form-control[readonly]{
+    background-color: rgb(247, 247, 247) !important;
+}
+
+/* input type=date */
+.datePut{
+	display: inline-flex !important;
+	margin-bottom: 10px;
+	width: 153px;
+	background-color: rgb(255, 255, 255) !important;
+	font-size : 12.5px !important;
+	padding-right: 10px;
+}
+
+/*----------------------------------------------------------*/
+
+/* select Style */
+.allOrderSearch{
+	width: 140px;
+	height: 35px;
+	margin: 8px 5px 0px 10px;
+	border: 1px solid rgb(235, 235, 235);
+}
+/*----------------------------------------------------------*/
+
+/* 전체적인 폰트를 조정*/
+.fontSize{
+    font-size: 12.5px !important;
+}
+
+/*----------------------------------------------------------*/
+
+/* mypage/mapage */
+.status-icons, .status-text, .status-link {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 10px;
+	width: 100%;
+}
+
+.status-link{
+    text-align: center;
+	color: skyblue;
+	font-weight: bold;
+}
+
+.status-icons img {
+    width: 30px;
+	height: 30px;
+}
+
+.status {
+    margin-top: 30px;
+    background: rgb(248, 245, 250);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.searchA{
+	padding: 8px 40px 5px 0px;
+}
+
+.fontColor{
+	color: black;
+}
+
+/*----------------------------------------------------------*/
+/* 페이징 CSS */
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	border-radius:50%;
+}
+
+.pagination a.active {
+	background-color: tomato;
+	color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: silver;}
