@@ -13,13 +13,6 @@ public class EmpController {
 	@Autowired
 	EmpMapper mapper;
 	
-	/*@GetMapping("/")
-	@ResponseBody
-	public String main() {
-		return "hello";
-	}*/
-	
-	
 	//사원 전체조회
 	@GetMapping("empList")
 	public String empList(Model model) {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" >
+    {{ message }}
+    <!--기본 순서 : child -> parent-->
+    <!--@click.stop="childevent"를 하니까 parent로 전파되지 않는다.-->
+    <div @click="parentevent">
+      <div @click.stop="childevent">event test</div>
+    </div>
+  </div>
+
+<script>
+  const { createApp } = Vue
+
+  createApp({   // {} -> 객체
+    data() {
+      return {
+        message: '제목',
+      }
+    },
+    //mounted(){},
+    methods:{
+      parentevent(){
+        alert("parent");
+      },
+      childevent(){
+        alert("child");
+      }
+    }
+  }).mount('#app')
+
+  /*
+  function App(){
+    this.create = function(){}
+    this.mount = function(){}
+  }
+
+  const app = new App();
+  app.create();
+
+  //앱안에있는 요소중에서 create만 쓸 수 있다는 것.
+  //Vue 안에 있는 create를 사용하겠다는 것.
+  const {create} = App;
+  //위에처럼 하지 않으면 쓸 때 마다 아래처럼 생성해야한다.
+  Vue.createApp()
+  */
+</script>
+</body>
+</html>

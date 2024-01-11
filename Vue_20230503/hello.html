@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <!-- 양방향은 v-model로 진행한다. -->
+  <div id="app" :text="message">{{ message }}
+    <input type="text" v-model="member.id">
+    <input type="text" v-model="member.pw">
+    <button type="button" @click="login">login</button>
+    <hr>
+    </br>
+    <button @click="awesome = !awesome">전환</button>
+    <h1 v-if="awesome">Vue는 정말 멋지죠!</h1>
+    <h1 v-else>아닌가요? 😢</h1>
+    <hr>
+    <h1 v-show="awesome">안녕!</h1>
+    <hr>
+    <div v-for="item in items">
+      <div>name : <span>{{item.name}}</span></div>
+      <div>price : <span>{{item.price}}</span></div>
+    </div>
+  </div>
+
+<script>
+  const { createApp } = Vue
+
+  createApp({   // {} -> 객체
+    data() {
+      return {
+        message: 'Hello Vue!',
+        member : {id : 'choi', pw : '1212'},
+        awesome : true,
+        items : []
+      }
+    },
+    methods : {
+      login(){
+        console.table(this.member);
+      }
+    },
+    mounted : function(){
+      //돔 로드가 다 생성하고나면 호출된다.
+      //아작스를 통해 데이터를 받아와서 화면에 출력한다.
+      //예시 : $.ajax(success : function(result){this.items = result;})
+      this.items = [ {name : '자바', price : 500},
+                    {name : '스프링', price : 800}, 
+                    {name : '노드', price : 900}  ]
+    }
+  }).mount('#app')
+</script>
+</body>
+</html>

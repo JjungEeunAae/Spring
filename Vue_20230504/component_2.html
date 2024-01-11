@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="my-app">
+    <p>
+      <!-- use the router-link component for navigation. -->
+      <!-- specify the link by passing the `to` prop. -->
+      <!-- `<router-link>` will render an `<a>` tag with the correct `href` attribute -->
+      <router-link to="/login">로그인</router-link>
+      <router-link to="/signin">회원가입</router-link>
+    </p>
+    <!-- route outlet -->
+    <!-- component matched by the route will render here -->
+    <router-view></router-view>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue-router@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+  <script src="vue_common.js"></script>
+  <script>
+
+    const routes = [
+      {path:"/login", component : Vue.defineAsyncComponent(()=> loadModule('./login.vue', options))},
+      {path:"/signin", component : Vue.defineAsyncComponent(()=> loadModule('./signin.vue', options))}
+    ];
+
+    const router = VueRouter.createRouter({
+      history : VueRouter.createWebHashHistory(),
+      routes
+    });
+
+    const app = Vue.createApp({});
+
+    app.use(router);
+    app.mount('#my-app');
+
+  </script>
+</body>
+</html>
